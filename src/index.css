@@ -1,1 +1,53 @@
 @import 'tailwindcss';
+
+@theme {
+  /* Tipografías */
+  --font-sans: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Colores: superficies */
+  --color-void: #08090b;
+  --color-panel: #101216;
+  --color-panel-2: #171a20;
+  --color-line: #232830;
+
+  /* Colores: texto */
+  --color-ink: #e8eaed;
+  --color-ink-dim: #8a919c;
+
+  /* Colores: acentos */
+  --color-signal: #c6ff3d;
+  --color-alert: #ff7a3d;
+
+  /* Escala de texto con nombre propio */
+  --text-display: clamp(3rem, 9vw, 7.5rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.04em;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1rem;
+  --text-label--letter-spacing: 0.14em;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-signal);
+    color: var(--color-void);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+}
