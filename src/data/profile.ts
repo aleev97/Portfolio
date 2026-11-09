@@ -23,5 +23,6 @@ export const profile = {
   ],
   email: "valverdealejandro327@gmail.com",
   github: "https://github.com/aleev97",
+  linkedin: "https://www.linkedin.com/in/alejandro-valverde-43a727232/",
   cvUrl: "/cv-alejandro-valverde.pdf",
 } as const;

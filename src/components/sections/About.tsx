@@ -1,5 +1,5 @@
-import { profile } from "../../data/profile";
-import { Section } from "../layout/Section";
+import { profile } from '../../data/profile'
+import { Section } from '../layout/Section'
 
 export function About() {
   return (
@@ -10,14 +10,12 @@ export function About() {
         <dl className="space-y-5 rounded-lg border border-line bg-panel p-6 md:col-span-2">
           {profile.facts.map((fact) => (
             <div key={fact.label}>
-              <dt className="font-mono text-label text-signal uppercase">
-                {fact.label}
-              </dt>
+              <dt className="font-mono text-label text-signal uppercase">{fact.label}</dt>
               <dd className="mt-1 text-sm">{fact.value}</dd>
             </div>
           ))}
         </dl>
       </div>
     </Section>
-  );
+  )
 }

@@ -1,5 +1,6 @@
 import { profile } from "../../data/profile";
 import { projects } from "../../data/projects";
+import { ButtonLink } from "../ui/ButtonLink";
 
 export function Hero() {
   const readouts = [
@@ -26,19 +27,12 @@ export function Hero() {
       <p className="mt-8 max-w-xl text-lg text-ink-dim">{profile.tagline}</p>
 
       <div className="mt-10 flex flex-wrap gap-4">
-        <a
-          href="#proyectos"
-          className="rounded-md bg-signal px-6 py-3 font-mono text-sm font-medium text-void transition-opacity hover:opacity-90"
-        >
+        <ButtonLink variant="primary" href="#proyectos">
           Ver proyectos
-        </a>
-        <a
-          href={profile.cvUrl}
-          download
-          className="rounded-md border border-line px-6 py-3 font-mono text-sm transition-colors hover:border-signal hover:text-signal"
-        >
+        </ButtonLink>
+        <ButtonLink href={profile.cvUrl} download>
           Descargar CV
-        </a>
+        </ButtonLink>
       </div>
 
       <dl className="mt-16 grid gap-6 border-t border-line pt-6 sm:grid-cols-3">
