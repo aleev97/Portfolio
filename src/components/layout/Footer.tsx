@@ -1,4 +1,4 @@
-import { profile } from "../../data/profile";
+import { profile } from '../../data/profile'
 
 export function Footer() {
   return (
@@ -10,5 +10,5 @@ export function Footer() {
         <p>React · TypeScript · Tailwind CSS</p>
       </div>
     </footer>
-  );
+  )
 }

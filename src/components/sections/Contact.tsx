@@ -1,13 +1,13 @@
-import { profile } from "../../data/profile";
-import { Section } from "../layout/Section";
-import { ButtonLink } from "../ui/ButtonLink";
+import { profile } from '../../data/profile'
+import { Section } from '../layout/Section'
+import { ButtonLink } from '../ui/ButtonLink'
 
 export function Contact() {
   return (
     <Section id="contacto" index="05" title="Contacto">
       <p className="max-w-xl text-lg text-ink-dim">
-        Busco oportunidades como desarrollador {profile.lookingFor}. Si tenés
-        una vacante o querés charlar sobre un proyecto, escribime.
+        Busco oportunidades como desarrollador {profile.lookingFor}. Si tenés una vacante
+        o querés charlar sobre un proyecto, escribime.
       </p>
 
       <a
@@ -29,5 +29,5 @@ export function Contact() {
         </ButtonLink>
       </div>
     </Section>
-  );
+  )
 }

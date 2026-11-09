@@ -1,14 +1,14 @@
-import type { Project } from "../../data/types";
-import { ButtonLink } from "./ButtonLink";
-import { Chip } from "./Chip";
+import type { Project } from '../../data/types'
+import { ButtonLink } from './ButtonLink'
+import { Chip } from './Chip'
 
 interface ProjectCardProps {
-  project: Project;
-  index: number;
+  project: Project
+  index: number
 }
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
-  const number = String(index + 1).padStart(2, "0");
+  const number = String(index + 1).padStart(2, '0')
 
   return (
     <article className="grid gap-8 rounded-lg border border-line bg-panel p-6 md:grid-cols-5 md:p-8">
@@ -16,9 +16,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         <p className="font-mono text-label text-signal uppercase">
           {number} // {project.period}
         </p>
-        <h3 className="mt-3 text-2xl font-bold tracking-tight">
-          {project.title}
-        </h3>
+        <h3 className="mt-3 text-2xl font-bold tracking-tight">{project.title}</h3>
         <p className="mt-2 text-ink-dim">{project.subtitle}</p>
 
         <ul className="mt-5 flex flex-wrap gap-2">
@@ -69,5 +67,5 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         ))}
       </ul>
     </article>
-  );
+  )
 }
