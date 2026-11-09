@@ -1,11 +1,11 @@
-import { Header } from './components/layout/Header'
-import { Section } from './components/layout/Section'
-import { About } from './components/sections/About'
-import { Hero } from './components/sections/Hero'
-import { TechStack } from './components/sections/TechStack'
-import { journey } from './data/journey'
-import { profile } from './data/profile'
-import { projects } from './data/projects'
+import { Header } from "./components/layout/Header";
+import { Section } from "./components/layout/Section";
+import { About } from "./components/sections/About";
+import { Hero } from "./components/sections/Hero";
+import { TechStack } from "./components/sections/TechStack";
+import { journey } from "./data/journey";
+import { profile } from "./data/profile";
+import { projects } from "./data/projects";
 
 function App() {
   return (
@@ -27,7 +27,10 @@ function App() {
         <Section id="proyectos" index="03" title="Proyectos">
           <ul className="space-y-4">
             {projects.map((project) => (
-              <li key={project.id} className="rounded-lg border border-line bg-panel p-5">
+              <li
+                key={project.id}
+                className="rounded-lg border border-line bg-panel p-5"
+              >
                 <p className="font-mono text-label text-ink-dim uppercase">
                   {project.period}
                 </p>
@@ -46,7 +49,9 @@ function App() {
                   {item.period}
                 </p>
                 <h3 className="mt-1 text-lg font-semibold">{item.title}</h3>
-                {item.place && <p className="text-sm text-ink-dim">{item.place}</p>}
+                {item.place && (
+                  <p className="text-sm text-ink-dim">{item.place}</p>
+                )}
                 <p className="mt-1 text-ink-dim">{item.description}</p>
               </li>
             ))}
@@ -64,7 +69,10 @@ function App() {
               </a>
             </li>
             <li>
-              <a className="transition-colors hover:text-signal" href={profile.github}>
+              <a
+                className="transition-colors hover:text-signal"
+                href={profile.github}
+              >
                 GitHub / aleev97
               </a>
             </li>
@@ -72,7 +80,7 @@ function App() {
         </Section>
       </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
