@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react'
 import { profile } from '../../data/profile'
 import { sections } from '../../data/sections'
 import { easeOut } from '../../lib/motion'
+import { useScrollStore } from '../../store/useScrollStore'
 
 const links = sections.filter((section) => section.id !== 'inicio')
 
 export function Header() {
   const [open, setOpen] = useState(false)
+  const activeSection = useScrollStore((state) => state.activeSection)
 
   useEffect(() => {
     if (!open) return
@@ -30,16 +32,35 @@ export function Header() {
 
         <nav aria-label="Principal" className="hidden md:block">
           <ul className="flex gap-8">
-            {links.map((link) => (
-              <li key={link.id}>
-                <a
-                  href={`#${link.id}`}
-                  className="font-mono text-label text-ink-dim uppercase transition-colors hover:text-signal"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {links.map((link) => {
+              const isActive = activeSection === link.id
+
+              return (
+                <li key={link.id}>
+                  <a
+                    href={`#${link.id}`}
+                    aria-current={isActive ? 'location' : undefined}
+                    className={`relative font-mono text-label uppercase transition-colors hover:text-signal ${
+                      isActive ? 'text-signal' : 'text-ink-dim'
+                    }`}
+                  >
+                    {link.label}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-indicator"
+                        aria-hidden="true"
+                        className="absolute inset-x-0 -bottom-1.5 h-px bg-signal"
+                        transition={{
+                          type: 'spring',
+                          stiffness: 400,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+                  </a>
+                </li>
+              )
+            })}
           </ul>
         </nav>
 
@@ -71,17 +92,24 @@ export function Header() {
             transition={{ duration: 0.3, ease: easeOut }}
           >
             <ul>
-              {links.map((link) => (
-                <li key={link.id}>
-                  <a
-                    href={`#${link.id}`}
-                    onClick={() => setOpen(false)}
-                    className="block px-6 py-4 font-mono text-label uppercase transition-colors hover:text-signal"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {links.map((link) => {
+                const isActive = activeSection === link.id
+
+                return (
+                  <li key={link.id}>
+                    <a
+                      href={`#${link.id}`}
+                      aria-current={isActive ? 'location' : undefined}
+                      onClick={() => setOpen(false)}
+                      className={`block px-6 py-4 font-mono text-label uppercase transition-colors hover:text-signal ${
+                        isActive ? 'text-signal' : 'text-ink'
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                )
+              })}
             </ul>
           </motion.nav>
         )}

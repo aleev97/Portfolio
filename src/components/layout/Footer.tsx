@@ -8,6 +8,9 @@ export function Footer() {
           © {new Date().getFullYear()} {profile.name}
         </p>
         <p>React · TypeScript · Tailwind CSS</p>
+        <a href="#inicio" className="transition-colors hover:text-signal">
+          Volver arriba ↑
+        </a>
       </div>
     </footer>
   )

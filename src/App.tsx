@@ -1,6 +1,9 @@
 import { MotionConfig } from 'motion/react'
+import { lazy, Suspense } from 'react'
+import { ScrollDebug } from './components/dev/ScrollDebug'
 import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
+import { ScrollStoreSync } from './components/layout/ScrollStoreSync'
 import { SmoothScroll } from './components/layout/SmoothScroll'
 import { About } from './components/sections/About'
 import { Contact } from './components/sections/Contact'
@@ -10,10 +13,16 @@ import { Projects } from './components/sections/Projects'
 import { TechStack } from './components/sections/TechStack'
 import { ScrollProgress } from './components/ui/ScrollProgress'
 
+const Experience = lazy(() => import('./three/Experience'))
+
 function App() {
   return (
     <MotionConfig reducedMotion="user">
       <SmoothScroll>
+        <Suspense fallback={null}>
+          <Experience />
+        </Suspense>
+
         <ScrollProgress />
 
         <a
@@ -35,6 +44,9 @@ function App() {
         </main>
 
         <Footer />
+
+        <ScrollStoreSync />
+        {import.meta.env.DEV && <ScrollDebug />}
       </SmoothScroll>
     </MotionConfig>
   )
