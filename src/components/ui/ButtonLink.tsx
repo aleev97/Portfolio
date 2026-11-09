@@ -5,7 +5,7 @@ interface ButtonLinkProps extends ComponentProps<'a'> {
   size?: 'md' | 'sm'
 }
 
-const base = 'rounded-md font-mono text-sm transition-colors'
+const base = 'rounded-md font-mono text-sm transition duration-200 active:scale-[0.97]'
 
 const variants = {
   primary: 'bg-signal text-void font-medium hover:opacity-90',

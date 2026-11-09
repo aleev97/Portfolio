@@ -1,3 +1,4 @@
+import { motion } from 'motion/react'
 import type { Project } from '../../data/types'
 import { ButtonLink } from './ButtonLink'
 import { Chip } from './Chip'
@@ -11,7 +12,11 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
   const number = String(index + 1).padStart(2, '0')
 
   return (
-    <article className="grid gap-8 rounded-lg border border-line bg-panel p-6 md:grid-cols-5 md:p-8">
+    <motion.article
+      className="grid gap-8 rounded-lg border border-line bg-panel p-6 transition-colors hover:border-signal/50 md:grid-cols-5 md:p-8"
+      whileHover={{ y: -6 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    >
       <div className="md:col-span-2">
         <p className="font-mono text-label text-signal uppercase">
           {number} // {project.period}
@@ -66,6 +71,6 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           </li>
         ))}
       </ul>
-    </article>
+    </motion.article>
   )
 }

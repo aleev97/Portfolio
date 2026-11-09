@@ -1,7 +1,10 @@
-import type { Variants } from "motion/react";
+import type { Variants } from 'motion/react'
 
-// Curva cubic-bezier: arranque rápido y frenado suave (sensación "precisa").
-export const easeOut: [number, number, number, number] = [0.34, 1.56, 0.64, 1];
+// Rebote leve: la curva pasa de 1 y vuelve (sensación orgánica).
+export const easeBounce: [number, number, number, number] = [0.34, 1.56, 0.64, 1]
+
+// Sin rebote: para tamaños y cosas que no deben "pasarse" (ej. altura del menú).
+export const easeOut: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
 // Contenedor: no se anima él, solo escalona a sus hijos.
 export const staggerContainer: Variants = {
@@ -9,14 +12,14 @@ export const staggerContainer: Variants = {
   show: {
     transition: { staggerChildren: 0.12, delayChildren: 0.1 },
   },
-};
+}
 
-// Hijo: aparece subiendo desde abajo.
+// Entrada del Hero: expresiva, ocurre una sola vez.
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 80 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 1.4, ease: easeOut },
+    transition: { duration: 1.4, ease: easeBounce },
   },
-};
+}
