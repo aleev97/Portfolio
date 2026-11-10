@@ -1,25 +1,44 @@
+import { useMemo } from 'react'
 import { sections } from '../data/sections'
+import { useScrollStore } from '../store/useScrollStore'
+import { CAMERA_PATH_RANGE } from './cameraConfig'
 import { circuitCurve } from './circuitPath'
 import { glowOrange } from './colors'
 
 const HALF_WIDTH = 3
 const HEIGHT = 3
 
-// Un arco por sección, repartidos de forma pareja (los calibramos en la 8B).
-const gates = sections.map((section, index) => {
-  const t = (index + 0.5) / sections.length
-  const position = circuitCurve.getPointAt(t)
-  const tangent = circuitCurve.getTangentAt(t)
-
-  return {
-    id: section.id,
-    position,
-    // Rotación sobre Y que alinea el arco con la dirección de la pista.
-    angle: Math.atan2(tangent.x, tangent.z),
-  }
-})
+// El Hero no lleva arco: la cámara arranca ahí.
+const gateSections = sections.filter((section) => section.id !== 'inicio')
 
 export function SectorGates() {
+  const sectionProgress = useScrollStore((state) => state.sectionProgress)
+
+  // Se recalcula solo cuando cambian las medidas de las secciones (poco frecuente).
+  const gates = useMemo(
+    () =>
+      gateSections.flatMap((section) => {
+        const progress = sectionProgress[section.id]
+        if (progress === undefined) return []
+
+        // Mismo mapeo que usa la cámara: el arco queda donde ella estará
+        // cuando el scroll llegue a esa sección.
+        const t = progress * CAMERA_PATH_RANGE
+        const position = circuitCurve.getPointAt(t)
+        const tangent = circuitCurve.getTangentAt(t)
+
+        return [
+          {
+            id: section.id,
+            position,
+            // Rotación sobre Y que alinea el arco con la dirección de la pista.
+            angle: Math.atan2(tangent.x, tangent.z),
+          },
+        ]
+      }),
+    [sectionProgress],
+  )
+
   return (
     <group>
       {gates.map((gate) => (

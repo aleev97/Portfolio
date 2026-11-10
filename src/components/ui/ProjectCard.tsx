@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+import { getProjectCover } from '../../data/projectImages'
 import type { Project } from '../../data/types'
 import { ButtonLink } from './ButtonLink'
 import { Chip } from './Chip'
@@ -10,6 +11,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
   const number = String(index + 1).padStart(2, '0')
+  const cover = getProjectCover(project.id)
 
   return (
     <motion.article
@@ -61,16 +63,30 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         )}
       </div>
 
-      <ul className="space-y-4 md:col-span-3">
-        {project.highlights.map((highlight) => (
-          <li key={highlight} className="flex gap-3 text-ink-dim">
-            <span aria-hidden="true" className="font-mono text-signal">
-              ›
-            </span>
-            <span>{highlight}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="md:col-span-3">
+        {cover && (
+          <div className="mb-6 aspect-video overflow-hidden rounded-md border border-line bg-panel-2">
+            <img
+              src={cover}
+              alt={`Captura de pantalla de ${project.title}`}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover object-top transition-transform duration-500 motion-safe:hover:scale-[1.03]"
+            />
+          </div>
+        )}
+
+        <ul className="space-y-4">
+          {project.highlights.map((highlight) => (
+            <li key={highlight} className="flex gap-3 text-ink-dim">
+              <span aria-hidden="true" className="font-mono text-signal">
+                ›
+              </span>
+              <span>{highlight}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </motion.article>
   )
 }
