@@ -1,6 +1,7 @@
 import { DoubleSide } from 'three'
-import type { BufferGeometry } from 'three'
+import type { BufferGeometry, ColorRepresentation } from 'three'
 import { circuitCurve } from './circuitPath'
+import { glowLime } from './colors'
 import { createRibbonGeometry } from './trackGeometry'
 
 const SEGMENTS = 600
@@ -47,7 +48,7 @@ const kerbsAccent = kerbs(4)
 
 interface RibbonProps {
   geometry: BufferGeometry
-  color: string
+  color: ColorRepresentation
   raised?: boolean
 }
 
@@ -71,7 +72,7 @@ export function Track() {
       <Ribbon geometry={road} color="#12151a" />
 
       {edgeLines.map((geometry, index) => (
-        <Ribbon key={`edge-${index}`} geometry={geometry} color="#c6ff3d" raised />
+        <Ribbon key={`edge-${index}`} geometry={geometry} color={glowLime} raised />
       ))}
 
       <Ribbon geometry={centerDashes} color="#8a919c" raised />

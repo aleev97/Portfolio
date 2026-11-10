@@ -1,5 +1,6 @@
 import { Grid } from '@react-three/drei'
 import { CameraRig } from './CameraRig'
+import { Effects } from './Effects'
 import { SectorGates } from './SectorGates'
 import { Track } from './Track'
 import { TrackLights } from './TrackLights'
@@ -26,6 +27,8 @@ export function Scene() {
       <Track />
       <TrackLights />
       <SectorGates />
+
+      <Effects />
     </>
   )
 }

@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { Object3D, Vector3 } from 'three'
 import type { InstancedMesh } from 'three'
 import { circuitCurve } from './circuitPath'
+import { glowLime } from './colors'
 
 const COUNT_PER_SIDE = 28
 const SIDE_OFFSET = 3.4
@@ -76,7 +77,7 @@ export function TrackLights() {
         frustumCulled={false}
       >
         <sphereGeometry args={[0.1, 8, 8]} />
-        <meshBasicMaterial color="#c6ff3d" />
+        <meshBasicMaterial color={glowLime} />
       </instancedMesh>
     </>
   )

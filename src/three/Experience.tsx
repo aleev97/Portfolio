@@ -7,8 +7,9 @@ export default function Experience() {
       <Canvas
         dpr={[1, 2]}
         camera={{ position: [0, 0, 6], fov: 45, near: 0.1, far: 100 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: false }}
       >
+        <color attach="background" args={['#08090b']} />
         <Scene />
       </Canvas>
     </div>
