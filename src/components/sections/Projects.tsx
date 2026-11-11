@@ -8,7 +8,7 @@ export function Projects() {
     <Section id="proyectos" index="03" title="Proyectos" revealContent={false}>
       <ul className="space-y-6">
         {projects.map((project, index) => (
-          <li key={project.id}>
+          <li key={project.id} id={project.id} className="scroll-mt-24">
             <Reveal>
               <ProjectCard project={project} index={index} />
             </Reveal>

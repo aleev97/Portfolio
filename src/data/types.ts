@@ -5,6 +5,7 @@ export interface Project {
   period: string
   stack: string[]
   highlights: string[]
+  coverAlt?: string
   repoUrl?: string
   demoUrl?: string
 }
@@ -20,6 +21,8 @@ export interface JourneyItem {
   place?: string
   description: string
   kind: 'education' | 'project'
+  current?: boolean
+  projectId?: string
 }
 
 export interface SectionLink {

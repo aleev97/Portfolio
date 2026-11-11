@@ -5,7 +5,7 @@ export const journey: JourneyItem[] = [
     period: '2018 – Actualidad',
     title: 'Ingeniería en Sistemas de Información',
     place: 'Universidad Tecnológica Nacional (UTN)',
-    description: 'Formación en ingeniería en sistemas de información.',
+    description: 'Formación en ingeniería de sistemas',
     kind: 'education',
   },
 ]
