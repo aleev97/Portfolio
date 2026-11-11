@@ -1,9 +1,13 @@
 import { Grid } from '@react-three/drei'
+import { lazy, Suspense } from 'react'
 import { CameraRig } from './CameraRig'
-import { Effects } from './Effects'
+import { quality } from './quality'
 import { SectorGates } from './SectorGates'
 import { Track } from './Track'
 import { TrackLights } from './TrackLights'
+
+// El bloom (y su librería) solo se descargan en equipos de calidad alta.
+const Effects = lazy(() => import('./Effects'))
 
 export function Scene() {
   return (
@@ -28,7 +32,11 @@ export function Scene() {
       <TrackLights />
       <SectorGates />
 
-      <Effects />
+      {quality === 'high' && (
+        <Suspense fallback={null}>
+          <Effects />
+        </Suspense>
+      )}
     </>
   )
 }

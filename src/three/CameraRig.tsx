@@ -1,4 +1,4 @@
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useReducedMotion } from 'motion/react'
 import { useEffect, useRef } from 'react'
 import { MathUtils, Vector3 } from 'three'
@@ -19,6 +19,11 @@ const PARALLAX_X = 0.8
 const PARALLAX_Y = 0.5
 const PARALLAX_DAMPING = 3
 
+// Renderizado bajo demanda
+const MAX_DELTA = 1 / 30
+const SETTLE_PROGRESS = 0.0002
+const SETTLE_POINTER = 0.001
+
 // Vectores reutilizables: crear objetos nuevos en cada cuadro llena la memoria de basura.
 const position = new Vector3()
 const lookAt = new Vector3()
@@ -30,22 +35,34 @@ const pointer = { x: 0, y: 0 }
 
 export function CameraRig() {
   const reduceMotion = useReducedMotion()
+  const invalidate = useThree((state) => state.invalidate)
   const smoothProgress = useRef(0)
   const smoothPointer = useRef({ x: 0, y: 0 })
 
+  // Con frameloop="demand" solo se dibuja cuando se pide: al mover el mouse
+  // o cuando cambia el estado del scroll.
   useEffect(() => {
     const onPointerMove = (event: PointerEvent) => {
       if (event.pointerType !== 'mouse') return
 
       pointer.x = (event.clientX / window.innerWidth) * 2 - 1
       pointer.y = -((event.clientY / window.innerHeight) * 2 - 1)
+      invalidate()
     }
 
     window.addEventListener('pointermove', onPointerMove, { passive: true })
-    return () => window.removeEventListener('pointermove', onPointerMove)
-  }, [])
+    const unsubscribe = useScrollStore.subscribe(() => invalidate())
+
+    return () => {
+      window.removeEventListener('pointermove', onPointerMove)
+      unsubscribe()
+    }
+  }, [invalidate])
 
   useFrame((state, delta) => {
+    // Tras una pausa larga, "delta" puede ser de segundos y la cámara saltaría.
+    const dt = Math.min(delta, MAX_DELTA)
+
     // Con "reducir movimiento" la cámara se queda quieta, sin parallax.
     const targetProgress = reduceMotion ? 0.08 : useScrollStore.getState().progress
     const targetX = reduceMotion ? 0 : pointer.x
@@ -55,19 +72,19 @@ export function CameraRig() {
       smoothProgress.current,
       targetProgress,
       FOLLOW_DAMPING,
-      delta,
+      dt,
     )
     smoothPointer.current.x = MathUtils.damp(
       smoothPointer.current.x,
       targetX,
       PARALLAX_DAMPING,
-      delta,
+      dt,
     )
     smoothPointer.current.y = MathUtils.damp(
       smoothPointer.current.y,
       targetY,
       PARALLAX_DAMPING,
-      delta,
+      dt,
     )
 
     const t = smoothProgress.current * CAMERA_PATH_RANGE
@@ -89,6 +106,14 @@ export function CameraRig() {
 
     state.camera.position.copy(position)
     state.camera.lookAt(lookAt)
+
+    // Si la cámara todavía no alcanzó su destino, se pide otro cuadro.
+    const isSettling =
+      Math.abs(targetProgress - smoothProgress.current) > SETTLE_PROGRESS ||
+      Math.abs(targetX - smoothPointer.current.x) > SETTLE_POINTER ||
+      Math.abs(targetY - smoothPointer.current.y) > SETTLE_POINTER
+
+    if (isSettling) state.invalidate()
   })
 
   return null

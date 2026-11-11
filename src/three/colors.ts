@@ -1,7 +1,9 @@
 import { Color } from 'three'
+import { quality } from './quality'
 
-// Colores "HDR": al multiplicarlos por un número mayor que 1 superan el umbral
-// del bloom y emiten brillo. El naranja necesita un factor mayor porque,
-// medido en luminosidad, es un color menos "brillante" que el lima.
-export const glowLime = new Color('#c6ff3d').multiplyScalar(2)
-export const glowOrange = new Color('#ff7a3d').multiplyScalar(4)
+// Sin bloom (calidad baja) no hay brillo: un color multiplicado por un factor
+// mayor que 1 se vería con el tono desviado, así que el factor vuelve a 1.
+const isHigh = quality === 'high'
+
+export const glowLime = new Color('#c6ff3d').multiplyScalar(isHigh ? 2 : 1)
+export const glowOrange = new Color('#ff7a3d').multiplyScalar(isHigh ? 4 : 1)

@@ -1,6 +1,6 @@
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
-export function Effects() {
+export default function Effects() {
   return (
     <EffectComposer multisampling={4}>
       <Bloom

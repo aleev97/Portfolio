@@ -10,16 +10,20 @@ export const easeOut: [number, number, number, number] = [0.22, 1, 0.36, 1]
 export const staggerContainer: Variants = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.08 },
   },
 }
 
-// Entrada del Hero: expresiva, ocurre una sola vez.
+// Entrada del Hero: el texto se hace visible rápido (opacidad) mientras el
+// movimiento conserva su rebote lento. Mejora el LCP sin cambiar la sensación.
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 80 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 1.4, ease: easeBounce },
+    transition: {
+      opacity: { duration: 0.5, ease: 'easeOut' },
+      y: { duration: 1.4, ease: easeBounce },
+    },
   },
 }
