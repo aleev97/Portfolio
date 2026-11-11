@@ -11,17 +11,33 @@ import { Hero } from './components/sections/Hero'
 import { Journey } from './components/sections/Journey'
 import { Projects } from './components/sections/Projects'
 import { TechStack } from './components/sections/TechStack'
+import { Backdrop } from './components/ui/Backdrop'
 import { ScrollProgress } from './components/ui/ScrollProgress'
+import { useAfterIdle } from './hooks/useAfterIdle'
+import { CanvasErrorBoundary } from './three/CanvasErrorBoundary'
+import { canRender3D, quality } from './three/quality'
 
 const Experience = lazy(() => import('./three/Experience'))
 
 function App() {
+  const isIdle = useAfterIdle()
+
+  // PC: el 3D arranca de inmediato. Equipos modestos: espera a que haya tiempo libre.
+  // Sin WebGL o con ahorro de datos: no se descarga.
+  const show3D = canRender3D && (quality === 'high' || isIdle)
+
   return (
     <MotionConfig reducedMotion="user">
       <SmoothScroll>
-        <Suspense fallback={null}>
-          <Experience />
-        </Suspense>
+        <Backdrop />
+
+        {show3D && (
+          <CanvasErrorBoundary>
+            <Suspense fallback={null}>
+              <Experience />
+            </Suspense>
+          </CanvasErrorBoundary>
+        )}
 
         <ScrollProgress />
 
