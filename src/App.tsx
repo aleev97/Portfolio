@@ -12,6 +12,7 @@ import { Journey } from './components/sections/Journey'
 import { Projects } from './components/sections/Projects'
 import { TechStack } from './components/sections/TechStack'
 import { Backdrop } from './components/ui/Backdrop'
+import { Scrim } from './components/ui/Scrim'
 import { ScrollProgress } from './components/ui/ScrollProgress'
 import { useAfterIdle } from './hooks/useAfterIdle'
 import { CanvasErrorBoundary } from './three/CanvasErrorBoundary'
@@ -38,6 +39,8 @@ function App() {
             </Suspense>
           </CanvasErrorBoundary>
         )}
+
+        <Scrim />
 
         <ScrollProgress />
 

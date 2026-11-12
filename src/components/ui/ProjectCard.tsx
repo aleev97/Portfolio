@@ -15,7 +15,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
   return (
     <motion.article
-      className="grid gap-8 rounded-lg border border-line bg-panel p-6 transition-colors hover:border-signal/50 md:grid-cols-5 md:p-8"
+      className="grid gap-8 rounded-lg border border-line bg-panel/80 p-6 transition-colors focus-within:border-signal/50 hover:border-signal/50 md:grid-cols-5 md:p-8"
       whileHover={{ y: -6 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
